@@ -1,1 +1,1 @@
-# nparty-server
+server part of project

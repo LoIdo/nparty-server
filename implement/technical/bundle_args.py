@@ -1,4 +1,6 @@
+import argparse
 import copy
+import os
 
 import zope.interface.declarations
 import sqlalchemy
@@ -47,20 +49,34 @@ class Factory(object):
 
     def __init__(self, **kwargs):
         """ initialize bundle factory """
+        ''' parse arguments '''
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--conf_file", default=os.path.join(os.path.curdir, "nparty.ini"))
+        parser.add_argument('--module_dir', default=os.path.join(os.path.pardir, "shared"))
+        parser.add_argument('--port', type=int, default=8888)
+        parser.add_argument('--debug', nargs="?", default=argparse.SUPPRESS)
+        parser.add_argument('--sal_conn', default="")
+        # parser.add_argument('--oss_conn', default="")
+        # parser.add_argument('--red_conn', default="")
+        args = parser.parse_args()
+
         ''' create sub component '''
         self.component.technical = implement.technical.Dummy()
         self.component.extension = implement.technical.Dummy()
 
         ''' set options '''
-        self.option.debug = (kwargs.get('debug') and True) or False
+        self.option.debug = hasattr(args, 'debug')
+        ''' set other information '''
+        self.other.conf_file = os.path.abspath(args.conf_file)
+        self.other.module_dir = os.path.abspath(args.module_dir)
+        self.other.port = args.port
 
         ''' get sqlalchemy configuration string '''
-        sal_conn = kwargs.get('sal_conn')
-        if sal_conn:
+        if args.sal_conn:
             ''' initialize database '''
             self.dependent.sa = implement.technical.Dummy()
             self.dependent.sa.engine = sqlalchemy.create_engine(
-                sal_conn, echo=self.option.debug, pool_size=2, pool_recycle=3600)
+                args.sal_conn, echo=self.option.debug, pool_size=2, pool_recycle=3600)
             self.dependent.sa.session_maker = sqlalchemy.orm.scoped_session(
                 sqlalchemy.orm.sessionmaker(bind=self.dependent.sa.engine, autocommit=True))
 

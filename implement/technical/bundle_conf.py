@@ -53,7 +53,11 @@ class Factory(object):
         self.component.extension = implement.technical.Dummy()
 
         ''' check running options '''
-        self.option.debug = (kwargs.get('debug') and True) or False
+        self.option.debug = config.get_value('debug')
+        ''' set other information '''
+        self.other.conf_file = config.get_value('conf_file')
+        self.other.module_dir = config.get_value('module_dir')
+        self.other.port = config.get_value('port')
 
         ''' get sqlalchemy configuration string '''
         sal_conn = config.get_value('sal_conn')
