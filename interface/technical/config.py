@@ -1,7 +1,7 @@
 import zope.interface
 
 
-class ICenter(zope.interface.Interface):
+class IConfig(zope.interface.Interface):
     """
     configuration center interface
     """
@@ -22,7 +22,7 @@ class ICenter(zope.interface.Interface):
         """
 
 
-class ICenterFactory(zope.interface.Interface):
+class IConfigFactory(zope.interface.Interface):
     """
     config center interface factory
     """

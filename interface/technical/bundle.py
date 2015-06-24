@@ -40,13 +40,3 @@ class IBundleFactory(zope.interface.Interface):
         """
         call to create bundle
         """
-
-    def install():
-        """
-        install running environment
-        """
-
-    def uninstall():
-        """
-        uninstall environment
-        """

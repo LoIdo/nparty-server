@@ -1,7 +1,7 @@
 import zope.interface
 
 
-class ICenter(zope.interface.Interface):
+class ICache(zope.interface.Interface):
     """
     interface of cache center
     wrapper of sth. like memcache and redis
@@ -33,7 +33,7 @@ class ICenter(zope.interface.Interface):
         """
 
 
-class ICenterFactory(zope.interface.Interface):
+class ICacheFactory(zope.interface.Interface):
     """
     cache center interface factory
     """
