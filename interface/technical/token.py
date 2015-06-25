@@ -8,7 +8,8 @@ class ICenter(zope.interface.Interface):
 
     def add_token(value, timeout):
         """
-        generate access token
+        generate access token by value
+        same value mapping to only one token
         return token id
         """
 

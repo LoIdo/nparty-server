@@ -1,4 +1,3 @@
-import datetime
 import redis
 import zope.interface.declarations
 
@@ -17,6 +16,9 @@ class _Cache(object):
     def __init__(self, engine_redis):
         self.engine_redis = engine_redis
 
+    def get_keys(self, pattern):
+        self.engine_redis.keys(pattern=pattern)
+
     def set_value(self, key, value, expire):
         self.engine_redis.setex(key, value, expire)
 
@@ -29,10 +31,10 @@ class _Cache(object):
             self.engine_redis.expire(key, expire)
         return val
 
-    def rmv_value(self, key):
+    def rmv_key(self, key):
         self.engine_redis.delete(key)
 
-    def rmv_value_match(self, key, value):
+    def rmv_key_match(self, key, value):
         with self.engine_redis.pipeline() as p:
             while True:
                 try:

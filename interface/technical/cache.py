@@ -7,6 +7,11 @@ class ICache(zope.interface.Interface):
     wrapper of sth. like memcache and redis
     """
 
+    def get_keys(pattern):
+        """
+        get keys by pattern
+        """
+
     def set_value(key, value, expire):
         """
         set key value pair to cache
@@ -22,12 +27,12 @@ class ICache(zope.interface.Interface):
         swap value, if there is already key value pair in cache
         """
 
-    def rmv_value(key):
+    def rmv_key(key):
         """
         remove key value pair in cache
         """
 
-    def rmv_value_match(key, value):
+    def rmv_key_match(key, value):
         """
         remove key value pair in cache if the input is matched
         """

@@ -33,8 +33,7 @@ def run(handler):
         gevent.monkey.patch_all()
         server = gevent.wsgi.WSGIServer(
             ('', _bundle_factory.other.port), app)
-        # print "starting gevent wsgi"
-        server.serve_forever()
+        server.serve_forever()  # start gevent WSGI
     except ImportError:
         import tornado.httpserver
         import tornado.ioloop
@@ -42,5 +41,4 @@ def run(handler):
         server = tornado.httpserver.HTTPServer(
             tornado.wsgi.WSGIContainer(app))
         server.listen(_bundle_factory.other.port)
-        # print "starting tornado ioloop"
-        tornado.ioloop.IOLoop.instance().start()
+        tornado.ioloop.IOLoop.instance().start()  # start tornado IOLoop
