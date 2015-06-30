@@ -13,6 +13,13 @@ class ILocation(zope.interface.Interface):
     latitude = zope.interface.Attribute('latitude of location')
 
 
+class IAreaCircle(ILocation):
+    """
+    interface of circle area
+    """
+    radius = zope.interface.Attribute('distance of area radius')
+
+
 class ITimePeriod(zope.interface.Interface):
     """
     interface of time period

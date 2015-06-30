@@ -18,6 +18,9 @@ class IUser(zope.interface.Interface):
     address = zope.interface.Attribute('user address')
     ''' address of user '''
 
+    schedule = zope.interface.Attribute('user schedule')
+    ''' user schedule, should provide interface.schedule.ISchedule '''
+
 
 class ICenter(zope.interface.Interface):
     """

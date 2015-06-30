@@ -1,34 +1,43 @@
 import zope.interface
 
 
+class IPlan(zope.interface.Interface):
+    """
+    interface of party plan
+    """
+
+    description = zope.interface.Attribute('party description')
+    ''' description of party theme '''
+
+    members = zope.interface.Attribute('party members')
+    ''' should provide interface.member.IMembers '''
+
+    plan_time = zope.interface.Attribute('party plan for time')
+    ''' should provide interface.coordinate.ITime '''
+
+    plan_place = zope.interface.Attribute('party plan for place')
+    ''' should provide interface.coordinate.IPlace '''
+
+
 class IParty(zope.interface.Interface):
     """
     interface of party
     """
 
-    """
-    basic
-    """
+    #  id = zope.interface.Attribute('party id')
 
-    id = zope.interface.Attribute('party id')
+    status = zope.interface.Attribute('party status')
+    ''' status of party '''
 
-    """
-    when
-    """
+    description = zope.interface.Attribute('party description')
+    ''' description of party theme '''
 
-    time_plan = zope.interface.Attribute('party plan time')
+    group = zope.interface.Attribute('party members')
+    ''' should provide interface.organization.IGroup '''
 
-    time_start = zope.interface.Attribute('party start time')
-    ''' agreed start time of party '''
+    period_time = zope.interface.Attribute('period time of party')
+    ''' should provide interface.technical.ITimePeriod '''
 
-    time_end = zope.interface.Attribute('party end time')
-    ''' approximate end time of party '''
+    area_place = zope.interface.Attribute('place held for party')
+    ''' should provide interface.technical.IAreaCircle '''
 
-    """
-    where
-    """
-
-    address = zope.interface.Attribute('party address')
-
-    location = zope.interface.Attribute('party location')
-    ''' should provide interface.technical.ILocation interface '''
