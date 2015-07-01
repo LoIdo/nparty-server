@@ -41,3 +41,38 @@ class IParty(zope.interface.Interface):
     area_place = zope.interface.Attribute('place held for party')
     ''' should provide interface.technical.IAreaCircle '''
 
+
+class ICenter(zope.interface.Interface):
+    """
+    center of party
+    """
+
+    def publish_plan():
+        """
+        publish party plan
+        :return plan
+        """
+
+    def publish_party(plan):
+        """
+        publish party by plan
+        :return party
+        """
+
+
+class ICenterFactory(zope.interface.Interface):
+    """
+    center of party
+    """
+
+    def __init__(bundle_factory):
+        """
+        :param bundle_factory:
+        :return:
+        """
+
+    def __call__(bundle):
+        """
+        :param bundle:
+        :return:
+        """

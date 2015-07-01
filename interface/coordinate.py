@@ -8,14 +8,15 @@ class ITime(zope.interface.Interface):
 
     time_plan = zope.interface.Attribute('time of plan')
 
-    time_last = zope.interface.Attribute('last time of party')
+    time_spend = zope.interface.Attribute('spend time of party')
 
     period_party = zope.interface.Attribute('time period of party')
     ''' should provide interface.technical.ITimePeriod '''
 
-    def add_member(member):
+    def calc_time(group):
         """
-        calculate time of party by members' schedule
+        calculate time of party by party group
+        return list of time
         """
 
 
@@ -27,12 +28,13 @@ class IPlace(zope.interface.Interface):
     area = zope.interface.Attribute('plan place')
     ''' should provide interface.technical.IAreaCircle '''
 
-    address = zope.interface.Attribute('address details of plan place')
+    radius = zope.interface.Attribute('radius distance of plan place')
+    ''' radius distance '''
 
-    def add_member(member):
+    def calc_place(group):
         """
-        :param member:
-        :return:
+        calculate place of party by party group
+        return list of places
         """
 
 
