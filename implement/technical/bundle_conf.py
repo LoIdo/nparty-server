@@ -5,7 +5,7 @@ import sqlalchemy
 import sqlalchemy.orm
 
 import interface.technical.bundle
-import interface.technical.config
+import interface.technical.configuration
 import implement.technical
 
 
@@ -46,7 +46,7 @@ class Factory(object):
 
     def __init__(self, **kwargs):
         config = kwargs.get('config')
-        if not interface.technical.config.IConfig.providedBy(config):
+        if not interface.technical.configuration.IConfig.providedBy(config):
             raise Exception('bundle should be initialized by config center')
 
         self.component.technical = implement.technical.Dummy()

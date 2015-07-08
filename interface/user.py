@@ -12,11 +12,11 @@ class IUser(zope.interface.Interface):
     name = zope.interface.Attribute('user name')
     ''' name of user '''
 
-    mobile = zope.interface.Attribute('user mobile number')
-    ''' mobile phone number of user '''
-
     address = zope.interface.Attribute('user address')
     ''' address of user '''
+
+    authentication = zope.interface.Attribute('user authentication')
+    ''' user authentication, should provide interface.technical.authentication.IAuth '''
 
     schedule = zope.interface.Attribute('user schedule')
     ''' user schedule, should provide interface.schedule.ISchedule '''

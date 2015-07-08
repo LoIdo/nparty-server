@@ -2,11 +2,11 @@ import ConfigParser
 
 import zope.interface.declarations
 
-import interface.technical.config
+import interface.technical.configuration
 
 
-@zope.interface.declarations.implementer(interface.technical.config.IConfig)
-@zope.interface.declarations.provider(interface.technical.config.IConfigFactory)
+@zope.interface.declarations.implementer(interface.technical.configuration.IConfig)
+@zope.interface.declarations.provider(interface.technical.configuration.IConfigFactory)
 class _Config(object):
     """
     class implements config interface

@@ -5,14 +5,14 @@ sys.setdefaultencoding('utf-8')
 
 import implement.technical.bundle_args
 import implement.technical.bundle_conf
-import implement.technical.config_cp
+import implement.technical.configuration_cp
 
 ''' create bundle factory to initialize server '''
 _bundle_factory = implement.technical.bundle_args.Factory()
 if _bundle_factory.other.conf_file:
     ''' overwrite bundle factory '''
     _bundle_factory = implement.technical.bundle_conf.Factory(
-        config=implement.technical.config_cp.Factory(
+        config=implement.technical.configuration_cp.Factory(
             _bundle_factory)(_bundle_factory()))
 
 ''' add specified modules root path '''

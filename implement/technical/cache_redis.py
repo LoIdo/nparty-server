@@ -2,7 +2,7 @@ import redis
 import zope.interface.declarations
 
 import interface.technical.cache
-import interface.technical.config
+import interface.technical.configuration
 import implement.technical
 
 
@@ -56,8 +56,8 @@ class Factory(object):
     """
     def __init__(self, bundle_factory):
         """ initialize redis """
-        config = bundle_factory.component.technical.config(bundle_factory())
-        if not interface.technical.config.IConfig.providedBy(config):
+        config = bundle_factory.component.technical.configuration(bundle_factory())
+        if not interface.technical.configuration.IConfig.providedBy(config):
             raise Exception('invalid configuration center')
 
         bundle_factory.dependent.redis = implement.technical.Dummy()

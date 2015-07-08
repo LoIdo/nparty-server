@@ -4,7 +4,7 @@ import sqlalchemy.ext.declarative
 import sqlalchemy.orm
 import zope.interface.declarations
 
-import interface.technical.config
+import interface.technical.configuration
 
 
 class _Table(sqlalchemy.ext.declarative.declarative_base()):
@@ -19,8 +19,8 @@ class _Table(sqlalchemy.ext.declarative.declarative_base()):
     value = sqlalchemy.Column(sqlalchemy.String(255), nullable=False)
 
 
-@zope.interface.declarations.implementer(interface.technical.config.IConfig)
-@zope.interface.declarations.provider(interface.technical.config.IConfigFactory)
+@zope.interface.declarations.implementer(interface.technical.configuration.IConfig)
+@zope.interface.declarations.provider(interface.technical.configuration.IConfigFactory)
 class _Config(object):
     """
     class implements authentication center interface

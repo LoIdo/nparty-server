@@ -71,7 +71,7 @@ class Factory(object):
     """
 
     def __init__(self, bundle_factory):
-        config = bundle_factory.component.technical.config(bundle_factory())
+        config = bundle_factory.component.technical.configuration(bundle_factory())
         self.args = {
             'url': config.get_value("ucpaas_sms_url") or "https://api.ucpaas.com/2014-06-30",
             'template': config.get_value("ucpaas_sms_template") or "6848",
