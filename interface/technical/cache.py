@@ -7,48 +7,32 @@ class ICache(zope.interface.Interface):
     wrapper of sth. like memcache and redis
     """
 
-    def get_keys(pattern):
+    def getKeys(pattern):
         """
         get keys by pattern
         """
 
-    def set_value(key, value, expire):
+    def setValue(key, value, expire):
         """
         set key value pair to cache
         """
 
-    def get_value(key):
+    def getValue(key):
         """
         get value by key in cache
         """
 
-    def swp_value(key, value, expire):
+    def swpValue(key, value, expire):
         """
         swap value, if there is already key value pair in cache
         """
 
-    def rmv_key(key):
+    def rmvKey(key):
         """
         remove key value pair in cache
         """
 
-    def rmv_key_match(key, value):
+    def rmvKeyMatch(key, value):
         """
         remove key value pair in cache if the input is matched
-        """
-
-
-class ICacheFactory(zope.interface.Interface):
-    """
-    cache center interface factory
-    """
-
-    def __init__(bundle_factory):
-        """
-        initialize center factory by bundle factory
-        """
-
-    def __call__(bundle):
-        """
-        create an object which provide cache center interface
         """

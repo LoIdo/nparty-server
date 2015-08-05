@@ -6,6 +6,9 @@ class IPlan(zope.interface.Interface):
     interface of party plan
     """
 
+    id = zope.interface.Attribute('plan id')
+    ''' plan id '''
+
     description = zope.interface.Attribute('party description')
     ''' description of party theme '''
 
@@ -24,7 +27,8 @@ class IParty(zope.interface.Interface):
     interface of party
     """
 
-    #  id = zope.interface.Attribute('party id')
+    id = zope.interface.Attribute('party id')
+    ''' party id '''
 
     status = zope.interface.Attribute('party status')
     ''' status of party '''
@@ -59,20 +63,12 @@ class ICenter(zope.interface.Interface):
         :return party
         """
 
-
-class ICenterFactory(zope.interface.Interface):
-    """
-    center of party
-    """
-
-    def __init__(bundle_factory):
+    def get_party(party_id):
         """
-        :param bundle_factory:
-        :return:
+        get party
         """
 
-    def __call__(bundle):
+    def get_plan(plan_id):
         """
-        :param bundle:
-        :return:
+        get plan
         """

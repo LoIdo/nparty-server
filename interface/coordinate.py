@@ -13,7 +13,7 @@ class ITime(zope.interface.Interface):
     period_party = zope.interface.Attribute('time period of party')
     ''' should provide interface.technical.ITimePeriod '''
 
-    def calc_time(group):
+    def calcTime(group):
         """
         calculate time of party by party group
         return list of time
@@ -31,7 +31,7 @@ class IPlace(zope.interface.Interface):
     radius = zope.interface.Attribute('radius distance of plan place')
     ''' radius distance '''
 
-    def calc_place(group):
+    def calcPlace(group):
         """
         calculate place of party by party group
         return list of places
@@ -43,7 +43,7 @@ class IPlace(zope.interface.Interface):
 #     coordinate center
 #     """
 #
-#     def add_coordinate_time(**kwargs):
+#     def addCoordinateTime(**kwargs):
 #         """
 #         add coordinate for time
 #         """

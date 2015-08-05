@@ -1,6 +1,32 @@
 import zope.interface
 
 
+class IAuth(zope.interface.Interface):
+    """
+    interface of user authentication
+    """
+
+    password = zope.interface.Attribute('password to login')
+
+    mobile = zope.interface.Attribute('binding mobile number')
+
+    email = zope.interface.Attribute('binding primary email')
+
+    email_backup = zope.interface.Attribute('binding backup email')
+
+
+class IProfile(zope.interface.Interface):
+    """
+    interface of user profile
+    """
+
+    name = zope.interface.Attribute('user name')
+    ''' name of user '''
+
+    address = zope.interface.Attribute('user address')
+    ''' address of user '''
+
+
 class IUser(zope.interface.Interface):
     """
     interface of user
@@ -9,14 +35,11 @@ class IUser(zope.interface.Interface):
     id = zope.interface.Attribute('user id')
     ''' id of user '''
 
-    name = zope.interface.Attribute('user name')
-    ''' name of user '''
-
-    address = zope.interface.Attribute('user address')
-    ''' address of user '''
+    profile = zope.interface.Attribute('user profile')
+    ''' user profile, should provide interface.user.IProfile '''
 
     authentication = zope.interface.Attribute('user authentication')
-    ''' user authentication, should provide interface.technical.authentication.IAuth '''
+    ''' user authentication, should provide interface.user.IAuth '''
 
     schedule = zope.interface.Attribute('user schedule')
     ''' user schedule, should provide interface.schedule.ISchedule '''

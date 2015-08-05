@@ -17,19 +17,3 @@ class ITransaction(zope.interface.Interface):
         exit code block
         end transaction
         """
-
-
-class ITransactionFactory(zope.interface.Interface):
-    """
-    transaction center interface factory
-    """
-
-    def __init__(bundle_factory):
-        """
-        initialize transaction factory
-        """
-
-    def __call__(bundle):
-        """
-        create an object which provide transaction interface
-        """
