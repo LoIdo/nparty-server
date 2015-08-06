@@ -1,41 +1,46 @@
 import redis
-import zope.interface.declarations
+import zope.interface
+import zope.component
 
 import interface.technical.cache
 import interface.technical.configuration
-import implement.technical
 
 
-@zope.interface.declarations.implementer(interface.technical.cache.ICache)
-@zope.interface.declarations.provider(interface.technical.cache.ICacheFactory)
-class _Cache(object):
+class Cache(object):
     """
     implements of cache center
     """
+    zope.interface.implements(interface.technical.cache.ICache)
 
-    def __init__(self, engine_redis):
-        self.engine_redis = engine_redis
+    def __init__(self):
+        config = zope.component.getUtility(
+            interface.technical.configuration,
+            "technical/configuration")
+        self.redis = redis.Redis(
+            host=config.getValue('redis;host') or '127.0.0.1',
+            port=config.getValue('redis;port') or '6379',
+            password=config.getValue('redis;pwd') or '2v0eps4o')
 
-    def get_keys(self, pattern):
-        self.engine_redis.keys(pattern=pattern)
+    def getKeys(self, pattern):
+        self.redis.keys(pattern=pattern)
 
-    def set_value(self, key, value, expire):
-        self.engine_redis.setex(key, value, expire)
+    def setValue(self, key, value, expire):
+        self.redis.setex(key, value, expire)
 
-    def get_value(self, key):
-        return self.engine_redis.get(key)
+    def getValue(self, key):
+        return self.redis.get(key)
 
-    def swp_value(self, key, value, expire):
-        val = self.engine_redis.getset(key, value)
+    def swpValue(self, key, value, expire):
+        val = self.redis.getset(key, value)
         if expire:  # set expire if there is any
-            self.engine_redis.expire(key, expire)
+            self.redis.expire(key, expire)
         return val
 
-    def rmv_key(self, key):
-        self.engine_redis.delete(key)
+    def rmvKey(self, key):
+        self.redis.delete(key)
 
-    def rmv_key_match(self, key, value):
-        with self.engine_redis.pipeline() as p:
+    def rmvKeyMatch(self, key, value):
+        with self.redis.pipeline() as p:
             while True:
                 try:
                     p.watch(key)
@@ -47,24 +52,3 @@ class _Cache(object):
                     return True
                 except redis.WatchError:
                     continue
-
-
-@zope.interface.declarations.implementer(interface.technical.cache.ICacheFactory)
-class Factory(object):
-    """
-    implements of verify code center factory
-    """
-    def __init__(self, bundle_factory):
-        """ initialize redis """
-        config = bundle_factory.component.technical.configuration(bundle_factory())
-        if not interface.technical.configuration.IConfig.providedBy(config):
-            raise Exception('invalid configuration center')
-
-        bundle_factory.dependent.redis = implement.technical.Dummy()
-        bundle_factory.dependent.redis.engine = redis.Redis(
-            host=config.get_value('redis_host') or '127.0.0.1',
-            port=config.get_value('redis_port') or '6379',
-            password=config.get_value('redis_pwd') or '2v0eps4o')
-
-    def __call__(self, bundle):
-        return _Cache(bundle.dependent.redis.engine)

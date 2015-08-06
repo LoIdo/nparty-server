@@ -52,21 +52,3 @@ class IPlace(zope.interface.Interface):
 #         """
 #         add coordinate for place
 #         """
-#
-#
-# class ICenterFactory(zope.interface.Interface):
-#     """
-#     factory of coordinate center
-#     """
-#
-#     def __init__(bundle_factory):
-#         """
-#         :param bundle_factory:
-#         :return:
-#         """
-#
-#     def __call__(bundle):
-#         """
-#         :param bundle:
-#         :return:
-#         """

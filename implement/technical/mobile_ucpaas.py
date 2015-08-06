@@ -4,22 +4,33 @@ import hashlib
 import json
 import urllib2
 
-import zope.interface.declarations
+import zope.interface
+import zope.component
 
 import interface.technical.mobile
+import interface.technical.configuration
 
 
-@zope.interface.declarations.implementer(interface.technical.mobile.IMobile)
-@zope.interface.declarations.provider(interface.technical.mobile.IMobileFactory)
-class _Mobile(object):
+class Mobile(object):
     """
     center of ucpass mobile
     """
 
-    def __init__(self, args):
-        self.args = args
+    zope.interface.implements(interface.technical.mobile.IMobile)
 
-    def send_sms(self, number, content):
+    def __init__(self):
+        config = zope.component.getUtility(
+            interface.technical.configuration,
+            "technical/configuration")
+        self.args = {
+            'url': config.getValue("ucpaas;sms_url") or "https://api.ucpaas.com/2014-06-30",
+            'template': config.getValue("ucpaas;sms_template") or "6848",
+            'appid': config.getValue("ucpaas;appid") or "aa9bc12a81964137abde104c230a3a10",
+            'sid': config.getValue("ucpaas;sid") or "4117897e587058ec76b4b28f88a28f70",
+            'token': config.getValue("ucpaas;token") or "6c9ea33b12ea589a17c1577aeaad886c",
+        }
+
+    def sendSMS(self, number, content):
         """ implementation of sendSMS """
         number = str(number)
         ''' use default template '''
@@ -60,25 +71,5 @@ class _Mobile(object):
             return int(res.get('respCode'))
         return 0
 
-    def send_voice(self, number, content):
+    def sendVoice(self, number, content):
         return NotImplemented
-
-
-@zope.interface.declarations.implementer(interface.technical.mobile.IMobileFactory)
-class Factory(object):
-    """
-    Factory of mobile center interface
-    """
-
-    def __init__(self, bundle_factory):
-        config = bundle_factory.component.technical.configuration(bundle_factory())
-        self.args = {
-            'url': config.get_value("ucpaas_sms_url") or "https://api.ucpaas.com/2014-06-30",
-            'template': config.get_value("ucpaas_sms_template") or "6848",
-            'appid': config.get_value("ucpaas_appid") or "aa9bc12a81964137abde104c230a3a10",
-            'sid': config.get_value("ucpaas_sid") or "4117897e587058ec76b4b28f88a28f70",
-            'token': config.get_value("ucpaas_token") or "6c9ea33b12ea589a17c1577aeaad886c",
-        }
-
-    def __call__(self, bundle):
-        return _Mobile(self.args)

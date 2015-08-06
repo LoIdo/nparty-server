@@ -1,42 +1,35 @@
 import ConfigParser
 
-import zope.interface.declarations
+import zope.interface
 
 import interface.technical.configuration
 
 
-@zope.interface.declarations.implementer(interface.technical.configuration.IConfig)
-@zope.interface.declarations.provider(interface.technical.configuration.IConfigFactory)
-class _Config(object):
+class Config(object):
     """
     class implements config interface
     """
+    zope.interface.implements(interface.technical.configuration.IConfig)
     
-    def __init__(self, filename, config):
+    def __init__(self):
         """ init all variables """
-        self.filename = filename
-        self.config = config
-
-    def set_value(self, key, value):
-        self.config.set('server', key, value)
-
-    def get_value(self, key):
-        return self.config.get('server', key)
-
-    def update_values(self):
-        """ reload file """
-        self.config.read(self.filename)
-
-
-class Factory(object):
-    """
-    factory of config interface
-    """
-
-    def __init__(self, bundle_factory):
         self.config = ConfigParser.ConfigParser()
-        self.config.read(bundle_factory.other.conf_file)
+        self.config.read("nparty.conf")
 
-    def __call__(self, bundle):
-        """ create object provide interface """
-        return _Config(bundle.other.conf_file, self.config)
+    def setValue(self, key, value):
+        keys = key.split(';', 1)
+        if len(keys) > 1:
+            self.config.set(keys[0], keys[1], value)
+        else:
+            self.config.set("server", keys[0], value)
+
+    def getValue(self, key):
+        keys = key.split(';', 1)
+        if len(keys) > 1:
+            self.config.get(keys[0], keys[1])
+        else:
+            self.config.get("server", keys[0])
+
+    def updateValues(self):
+        """ reload file """
+        self.config.read("nparty.conf")
