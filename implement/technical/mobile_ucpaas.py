@@ -20,8 +20,7 @@ class Mobile(object):
 
     def __init__(self):
         config = zope.component.getUtility(
-            interface.technical.configuration,
-            "technical/configuration")
+            interface.technical.configuration)
         self.args = {
             'url': config.getValue("ucpaas;sms_url") or "https://api.ucpaas.com/2014-06-30",
             'template': config.getValue("ucpaas;sms_template") or "6848",

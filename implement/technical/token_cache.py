@@ -12,13 +12,13 @@ class Center(object):
     """
     implement of token center
     """
-    zope.interface.implements(interface.technical.token.ICenter)
+    zope.interface.implements(interface.technical.token.IToken)
 
     def __init__(self):
         self.cache = zope.component.getUtility(
             interface.technical.cache, "technical/cache")
 
-    def add_token(self, value, timeout):
+    def addToken(self, value, timeout):
         list_token = self.cache.getKeys('token:*:%s' % value)
         if list_token:
             if len(list_token) > 1:
@@ -29,19 +29,19 @@ class Center(object):
         self.cache.setValue(token, "", timeout)
         return True
 
-    def rmv_token(self, token_id):
+    def rmvToken(self, token_id):
         list_token = self.cache.getKeys('token:%s:*' % token_id)
         if list_token:  # remove all keys that match the token
             for key in list_token:
                 self.cache.rmvKey(key)
 
-    def rmv_token_match(self, token_id, value):
+    def rmvTokenMatch(self, token_id, value):
         list_token = self.cache.getKeys('token:%s:%s' % (token_id, value))
         if list_token:  # remove all keys that match the token
             for key in list_token:
                 self.cache.rmvKey(key)
 
-    def chk_token(self, token_id):
+    def chkToken(self, token_id):
         list_token = self.cache.getKeys('token:%s:*' % token_id)
         if list_token and len(list_token) == 1:
             return list_token[0].split(':', 3)[2]

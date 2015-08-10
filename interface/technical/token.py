@@ -1,7 +1,7 @@
 import zope.interface
 
 
-class ICenter(zope.interface.Interface):
+class IToken(zope.interface.Interface):
     """
     center of access token
     """
