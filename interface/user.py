@@ -1,10 +1,11 @@
 import zope.interface
 
 
-class IAuth(zope.interface.Interface):
+class IUser(zope.interface.Interface):
     """
     interface of user authentication
     """
+    account = zope.interface.Attribute('account to login')
 
     password = zope.interface.Attribute('password to login')
 
@@ -14,35 +15,11 @@ class IAuth(zope.interface.Interface):
 
     email_backup = zope.interface.Attribute('binding backup email')
 
-
-class IProfile(zope.interface.Interface):
-    """
-    interface of user profile
-    """
-
     name = zope.interface.Attribute('user name')
     ''' name of user '''
 
     address = zope.interface.Attribute('user address')
     ''' address of user '''
-
-
-class IUser(zope.interface.Interface):
-    """
-    interface of user
-    """
-
-    id = zope.interface.Attribute('user id')
-    ''' id of user '''
-
-    profile = zope.interface.Attribute('user profile')
-    ''' user profile, should provide interface.user.IProfile '''
-
-    authentication = zope.interface.Attribute('user authentication')
-    ''' user authentication, should provide interface.user.IAuth '''
-
-    schedule = zope.interface.Attribute('user schedule')
-    ''' user schedule, should provide interface.schedule.ISchedule '''
 
 
 class ICenter(zope.interface.Interface):
@@ -68,22 +45,4 @@ class ICenter(zope.interface.Interface):
     def find_users(**kwargs):
         """
         find users by user information
-        """
-
-
-class ICenterFactory(zope.interface.Interface):
-    """
-    interface of center factory
-    """
-
-    def __init__(bundle_factory):
-        """
-        :param bundle_factory:
-        :return:
-        """
-
-    def __call__(bundle):
-        """
-        :param bundle:
-        :return:
         """
