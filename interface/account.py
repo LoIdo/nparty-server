@@ -1,9 +1,11 @@
 import zope.interface
 
+import interface.technical.storage
 
-class IAccount(zope.interface.Interface):
+
+class IAccount(interface.technical.storage.IStorage):
     """
-    interface for account
+    interface for account, inherit IStorage interface
     """
 
     id = zope.interface.Attribute('id of account')
@@ -12,8 +14,13 @@ class IAccount(zope.interface.Interface):
     name = zope.interface.Attribute('account name')
     ''' name of account '''
 
-    profile = zope.interface.Attribute('account profile')
-    ''' profile of account, provide interface.technical.storage.IStorage '''
+    password = zope.interface.Attribute('account password')
+    ''' password of account '''
+
+    def remove():
+        """
+        remove current account
+        """
 
 
 class ICenter(zope.interface.Interface):
@@ -28,13 +35,7 @@ class ICenter(zope.interface.Interface):
         :return:
         """
 
-    def rmvAccount(account):
-        """
-        :param account:
-        :return:
-        """
-
-    def authAccount(name, password):
+    def getAccount(name):
         """
         authenticate for account
         :param account:
