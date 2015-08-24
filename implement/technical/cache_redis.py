@@ -3,7 +3,7 @@ import zope.interface
 import zope.component
 
 import interface.technical.cache
-import interface.technical.configuration
+import interface.technical.storage
 
 
 class Cache(object):
@@ -14,7 +14,7 @@ class Cache(object):
 
     def __init__(self):
         config = zope.component.getUtility(
-            interface.technical.configuration)
+            interface.technical.storage.IStorage)
         self.redis = redis.Redis(
             host=config.getValue('redis;host') or '127.0.0.1',
             port=config.getValue('redis;port') or '6379',

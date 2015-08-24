@@ -5,7 +5,7 @@ import zope.interface
 import zope.component
 
 import interface.technical.database
-import interface.technical.configuration
+import interface.technical.storage
 
 
 class Operator(sqlalchemy.orm.Session):
@@ -37,7 +37,7 @@ class Client(object):
         initialize SQLAlchemy by configuration
         """
         config = zope.component.getUtility(
-            interface.technical.configuration)
+            interface.technical.storage.IStorage)
         self.engine = sqlalchemy.create_engine(
             config.getValue('sqlalchemy;conn')
             or "mysql://root:2v0eps4o@127.0.0.1:3306/nparty?charset=utf8",

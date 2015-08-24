@@ -2,30 +2,51 @@ import zope.interface
 import zope.component
 
 import interface.account
+import interface.technical.storage
 import interface.technical.database
 
 
-class Account(dict):
+class Profile(object):
+
+    zope.interface.implements(interface.technical.storage.IStorage)
+
+    def __init__(self, collection, cache=None):
+        self._collection = collection
+        self._dict = cache or {}
+
+    def setValue(self, key, value):
+        self._dict[key] = value
+        self._collection.update()
+
+    def getValue(self, key):
+        pass
+
+    def updateValues(self):
+        pass
+
+
+class Account(object):
 
     zope.interface.implements(interface.account.IAccount)
 
-    def __init__(self, collection):
-        super(Account, self).__init__()
-        self.collection = collection
+    def __init__(self):
+        self._id = None
+        self._name = None
+        self._pswd = None
+        self._profile = None
 
     def get_id(self):
-        return self.get('_id')
+        return self._id
+
+    def get_name(self):
+        return self._name
+
+    def get_profile(self):
+        return self._profile
 
     id = property(fget=get_id(), doc='id of account')
-
-    def getProfile(self, key):
-        """ get profile of account """
-        return self.get(key)
-
-    def setProfile(self, key, value):
-        v = self.get(key)
-        self[key] = value
-        # self.collection.update()
+    name = property(fget=get_name(), doc='name of account')
+    profile = property(fget=get_profile(), doc='profile of account')
 
 
 class Center(object):
@@ -37,15 +58,15 @@ class Center(object):
         self.collection = operator.accounts
         ''' treat operator as pymongo Database'''
 
-    def addAccount(self, account, password, **kwargs):
+    def addAccount(self, name, password, **kwargs):
         acc = Account(self.collection)
-        acc.update(**{'account': account, 'password': password})
+        acc.update(**{'account': name, 'password': password})
         acc.update(**kwargs)
         acc.update(_id=self.collection.insert_one(acc).inserted_id)
         return acc
 
-    def rmvAccount(self, account_id):
+    def rmvAccount(self, account):
         pass
 
-    def authAccount(self, account, password):
+    def authAccount(self, name, password):
         pass

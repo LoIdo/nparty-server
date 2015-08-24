@@ -2,14 +2,14 @@ import ConfigParser
 
 import zope.interface
 
-import interface.technical.configuration
+import interface.technical.storage
 
 
-class Config(object):
+class Storage(object):
     """
     class implements config interface
     """
-    zope.interface.implements(interface.technical.configuration.IConfig)
+    zope.interface.implements(interface.technical.storage.IStorage)
     
     def __init__(self):
         """ init all variables """

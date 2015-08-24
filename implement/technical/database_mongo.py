@@ -3,7 +3,7 @@ import zope.interface
 import zope.component
 
 import interface.technical.database
-import interface.technical.configuration
+import interface.technical.storage
 
 
 '''
@@ -34,7 +34,7 @@ class Client(object):
         initialize mongodb by configuration
         """
         config = zope.component.getUtility(
-            interface.technical.configuration)
+            interface.technical.storage.IStorage)
         mongo_url = config.getValue('mongodb;conn')\
             or 'mongodb://root:2v0eps4o@ushouhou.cn/nparty'
         self.engine = pymongo.MongoClient(mongo_url)

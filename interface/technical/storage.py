@@ -1,7 +1,7 @@
 import zope.interface
 
 
-class IConfig(zope.interface.Interface):
+class IStorage(zope.interface.Interface):
     """
     configuration center interface
     """

@@ -9,15 +9,11 @@ class IAccount(zope.interface.Interface):
     id = zope.interface.Attribute('id of account')
     ''' id of account '''
 
-    def getProfile(key):
-        """
-        get profile of account
-        """
+    name = zope.interface.Attribute('account name')
+    ''' name of account '''
 
-    def setProfile(key, value):
-        """
-        get profile of account
-        """
+    profile = zope.interface.Attribute('account profile')
+    ''' profile of account, provide interface.technical.storage.IStorage '''
 
 
 class ICenter(zope.interface.Interface):
@@ -25,20 +21,20 @@ class ICenter(zope.interface.Interface):
     center of account
     """
 
-    def addAccount(account, password, **kwargs):
+    def addAccount(name, password, **kwargs):
         """
         :param account:
         :param password:
         :return:
         """
 
-    def rmvAccount(account_id):
+    def rmvAccount(account):
         """
         :param account:
         :return:
         """
 
-    def authAccount(account, password):
+    def authAccount(name, password):
         """
         authenticate for account
         :param account:
