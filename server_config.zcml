@@ -1,0 +1,34 @@
+<configure xmlns="http://namespaces.zope.org/zope">
+    <include package="zope.component" file="meta.zcml" />
+    <!--interface.technical.storage.IStorage-->
+    <include package="implement.technical.storage_ap"/>
+    <include package="implement.technical.storage_cp"/>
+    <utility
+            component="implement.technical.storage_ap.Storage"
+            provides="interface.technical.storage.IStorage"
+            name="technical/storage/ap"/>
+    <!--
+    <utility
+            component="implement.technical.storage_cp.Storage"
+            provides="interface.technical.storage.IStorage"
+            name="technical/storage/cp"/>
+    -->
+    <utility
+            component="implement.technical.storage_cp.Storage"
+            provides="interface.technical.storage.IStorage"/>
+    <!--interface.technical.cache.ICache-->
+    <include package="implement.technical.cache_redis"/>
+    <utility
+            component="implement.technical.cache_redis.Cache"
+            provides="interface.technical.cache.ICache"/>
+    <!--interface.technical.database.IClient-->
+    <include package="implement.technical.database_mongo"/>
+    <utility
+            component="implement.technical.database_mongo.Client"
+            provides="interface.technical.database.IClient"/>
+    <!--
+    <utility
+            component="implement.technical.database_mongo.Client"
+            provides="interface.technical.database.IClient"/>
+    -->
+</configure>

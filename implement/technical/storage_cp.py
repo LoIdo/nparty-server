@@ -1,6 +1,7 @@
 import ConfigParser
 
 import zope.interface
+import zope.component
 
 import interface.technical.storage
 
@@ -13,8 +14,12 @@ class Storage(object):
     
     def __init__(self):
         """ init all variables """
+        args = zope.component.getUtility(
+            interface.technical.storage.IStorage,
+            "technical/storage/ap")
+        self.filename = args.getValue('file')
         self.config = ConfigParser.ConfigParser()
-        self.config.read("nparty.conf")
+        self.config.read(self.filename)
 
     def setValue(self, key, value):
         keys = key.split(';', 1)
@@ -32,4 +37,4 @@ class Storage(object):
 
     def updateValues(self):
         """ reload file """
-        self.config.read("nparty.conf")
+        self.config.read(self.filename)

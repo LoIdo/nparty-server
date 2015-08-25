@@ -16,7 +16,7 @@ class Center(object):
 
     def __init__(self):
         self.cache = zope.component.getUtility(
-            interface.technical.cache, "technical/cache")
+            interface.technical.cache.ICache)
 
     def addToken(self, value, timeout):
         list_token = self.cache.getKeys('token:*:%s' % value)
